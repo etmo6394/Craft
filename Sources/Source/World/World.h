@@ -13,7 +13,7 @@ class Player;
 
 class World {
 	public:
-		World(const Camera& camera, const Player& player);
+		World(const Camera& camera, Player& player);
 
 		ChunkBlock getBlock(int x, int y, int z);
 		void setBlock(int x, int y, int z, ChunkBlock block);
@@ -22,13 +22,17 @@ class World {
 
 		void update(const Camera& camera, const Player& player);
 
+		void setSpawn(const Player& player, NoiseGenerator temp_noiseGen);
+
+		bool inLoadRadius(int x, int y);
+
 		// ChunkManager& getChunkManager();
 
 		// static VectorXZ getBlockXZ(int x, int z);
         // static VectorXZ getChunkXZ(int x, int z);
 
 	private:
-		int m_spawnHeight;
+		glm::vec3 m_spawnCoords;
 
 		std::unordered_set<sf::Vector3i> m_rebuildChunks;
 

@@ -26,7 +26,7 @@ class Chunk : public IChunk {
 		ChunkSection& getSection(int index);
 
 		bool hasLoaded() const;
-		void load();
+		void load(NoiseGenerator temp_noiseGen);
 
 	private:
 		std::vector<ChunkSection> m_chunks;

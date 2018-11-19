@@ -20,7 +20,7 @@ add_executable(${PROJECTNAME}  main.cpp ${SOURCES})
 
 #find_package( OpenGL REQUIRED )
 
-
+set(SFML_ROOT "G:/SFML") 
 # Find SFML
 set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML REQUIRED audio graphics window system)

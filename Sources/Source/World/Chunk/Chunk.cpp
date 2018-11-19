@@ -66,9 +66,9 @@ bool Chunk::hasLoaded() const {
 	return m_isLoaded;
 }
 
-void Chunk::load() {
-	static int seed = RandomSingleton::get().intInRange(444,444444);
-	NoiseGenerator temp_noiseGen(seed);
+void Chunk::load(NoiseGenerator temp_noiseGen) {
+	// static int seed = RandomSingleton::get().intInRange(444,444444);
+	// NoiseGenerator temp_noiseGen(seed);
 	std::array<int, CHUNK_AREA> heightMap;
 	int maxValue = 0;
 
