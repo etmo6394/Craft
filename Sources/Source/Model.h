@@ -19,6 +19,7 @@ class Model : public NonCopyable {
 
 		void addEBO(const std::vector<GLuint>& indices);
 		void addVBO(int dimensions, const std::vector<GLfloat>& data);
+		void genVAO();
 		void bindVAO() const;
 
 		int getIndicesCount() const;

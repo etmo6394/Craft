@@ -8,6 +8,7 @@
 class RenderMaster;
 class Camera;
 class NoiseGenerator;
+class TerrainGenerator;
 
 class Chunk : public IChunk {
 	public:
@@ -25,8 +26,10 @@ class Chunk : public IChunk {
 
 		ChunkSection& getSection(int index);
 
+		sf::Vector2i getLocation();
+
 		bool hasLoaded() const;
-		void load(NoiseGenerator temp_noiseGen);
+		void load(TerrainGenerator& generator);
 
 	private:
 		std::vector<ChunkSection> m_chunks;

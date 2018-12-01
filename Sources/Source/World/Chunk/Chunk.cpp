@@ -5,6 +5,7 @@
 #include "../../Util/Random.h"
 #include "../../Camera.h"
 #include "../../Maths/NoiseGenerator.h"
+#include "../Generation/TerrainGenerator.h"
 
 
 Chunk::Chunk(const sf::Vector2i& location, World& world)
@@ -66,45 +67,49 @@ bool Chunk::hasLoaded() const {
 	return m_isLoaded;
 }
 
-void Chunk::load(NoiseGenerator temp_noiseGen) {
-	// static int seed = RandomSingleton::get().intInRange(444,444444);
-	// NoiseGenerator temp_noiseGen(seed);
-	std::array<int, CHUNK_AREA> heightMap;
-	int maxValue = 0;
+void Chunk::load(TerrainGenerator& generator) {
+	// std::array<int, CHUNK_AREA> heightMap;
+	// int maxValue = 0;
 
-	// load chunk sections
-	for (int y = 0; y < 8; y++) {
-		m_chunks.emplace_back(sf::Vector3i(m_location.x, y, m_location.y), *m_pWorld);
-	}
+	// // load chunk sections
+	// for (int y = 0; y < 8; y++) {
+	// 	m_chunks.emplace_back(sf::Vector3i(m_location.x, y, m_location.y), *m_pWorld);
+	// }
 
-	// generate heightmap
-	for (int x = 0; x < 16; x++) {
-		for (int z = 0; z < 16; z++) {
-			int h = temp_noiseGen.getHeight(x, z, m_location.x, m_location.y);
-			heightMap[x * CHUNK_SIZE + z] = h;
+	// // generate heightmap
+	// for (int x = 0; x < 16; x++) {
+	// 	for (int z = 0; z < 16; z++) {
+	// 		int h = temp_noiseGen.getHeight(x, z, m_location.x, m_location.y);
+	// 		heightMap[x * CHUNK_SIZE + z] = h;
 
-			maxValue = std::max(maxValue, h);
+	// 		maxValue = std::max(maxValue, h);
+	// 	}
+	// }
+
+	// // set block types
+	// for (int y = 0; y < maxValue + 1; y++) {
+	// 	for (int x = 0; x < 16; x++) {
+	// 		for (int z = 0; z < 16; z++) {
+	// 			if (y > heightMap[x * CHUNK_SIZE + z]) {
+	// 				setBlock(x, y, z, BlockId::Air);
+	// 			} else if (y == heightMap[x * CHUNK_SIZE + z]) {
+	// 				setBlock(x, y, z, BlockId::Grass);
+	// 			} else if (y > heightMap[x * CHUNK_SIZE + z] - 3) {
+	// 				setBlock(x, y, z, BlockId::Dirt);
+	// 			} else if (y > 2) {
+	// 				setBlock(x, y, z, BlockId::Stone);
+	// 			} else {
+	// 				setBlock(x, y, z, BlockId::Bedrock);
+	// 			}
+	// 		}
+	// 	}
+	// }
+	if (!m_isLoaded) {
+		// load chunk sections
+		for (int y = 0; y < 8; y++) {
+			m_chunks.emplace_back(sf::Vector3i(m_location.x, y, m_location.y), *m_pWorld);
 		}
-	}
-	//int height = m_chunks.size() * CHUNK_SIZE - 1;
-
-	// set block types
-	for (int y = 0; y < maxValue + 1; y++) {
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
-				if (y > heightMap[x * CHUNK_SIZE + z]) {
-					setBlock(x, y, z, BlockId::Air);
-				} else if (y == heightMap[x * CHUNK_SIZE + z]) {
-					setBlock(x, y, z, BlockId::Grass);
-				} else if (y > heightMap[x * CHUNK_SIZE + z] - 3) {
-					setBlock(x, y, z, BlockId::Dirt);
-				} else if (y > 2) {
-					setBlock(x, y, z, BlockId::Stone);
-				} else {
-					setBlock(x, y, z, BlockId::Bedrock);
-				}
-			}
-		}
+		generator.generateTerrain(*this);
 	}
 	m_isLoaded = true;
 }
@@ -114,4 +119,8 @@ ChunkSection& Chunk::getSection(int index) {
         m_chunks.emplace_back(sf::Vector3i(m_location.x, m_chunks.size(), m_location.y), *m_pWorld);
     }
     return m_chunks.at(index);
+}
+
+sf::Vector2i Chunk::getLocation() {
+	return m_location;
 }

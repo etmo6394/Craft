@@ -3,8 +3,8 @@
 
 struct Config
 {
-    int windowX         = 2560;
-    int windowY         = 1440;
+    int windowX         = 1920;
+    int windowY         = 1080;
     bool isFullscreen   = false;
     int renderDistance  = 16;
     int fov             = 90;

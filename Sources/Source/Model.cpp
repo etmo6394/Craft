@@ -29,18 +29,20 @@ Model& Model::operator=(Model&& other) {
     return *this;
 }
 
+void Model::genVAO() {
+    if (m_vao != 0)
+        deleteData();
+
+    glGenVertexArrays(1, &m_vao);
+    glBindVertexArray(m_vao);
+}
+
 void Model::bindVAO() const {
 	glBindVertexArray(m_vao); // activate VAO
 }
 
 void Model::addData(const Mesh& mesh) {
-	if (m_vao != 0) // Vertex Array Object (which VBO connected to which attrib)
-		deleteData();
-
-	m_indicesCount = mesh.indices.size();
-
-	glGenVertexArrays(1, &m_vao); // create new VAO
-	glBindVertexArray(m_vao); // activate VAO
+	genVAO();
 
 	addVBO(3, mesh.vertexPositions); // add VBO vert pos
 	addVBO(2, mesh.textureCoords); // add VBO tex coords
@@ -60,6 +62,7 @@ void Model::addVBO(int dimensions, const std::vector<GLfloat>& data) {
 }
 
 void Model::addEBO(const std::vector<GLuint>& indices) {
+	m_indicesCount = indices.size();
 	GLuint ebo; // Element Buffer Object (source of ind during rendering)
 	glGenBuffers(1, &ebo); // generate name for new buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo); // activate buffer

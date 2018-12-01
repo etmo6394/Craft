@@ -5,7 +5,7 @@
 
 Player::Player() 
 :	Entity	({1000, 100, 1000}, {0, 180, 0}, {0.4, 1.0, 0.4}) {
-
+	std::cout << "Loading Player..." << std::endl;
 }
 
 void Player::handleInput(const sf::RenderWindow& window) {

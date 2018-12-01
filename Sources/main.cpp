@@ -26,7 +26,7 @@ int main() {
 	//displayInfo();
 
     //std::cin.ignore();
-    std::cout << "Loading game...\n";
+    std::cout << "Loading Game...\n";
 
 	Application app(config);
 	app.runLoop();

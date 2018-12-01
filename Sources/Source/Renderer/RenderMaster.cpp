@@ -25,6 +25,10 @@ void RenderMaster::drawGUI(const sf::Drawable& drawable) {
 	m_GUIRenderer.add(drawable);
 }
 
+void RenderMaster::drawSkybox() {
+	m_skyboxRenderer.add();
+}
+
 void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera) {
 	glClearColor(0.1, 0.5, 1.0, 1.0); // set clear color
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT); // set bitplane to clear color
@@ -32,8 +36,10 @@ void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera) 
     glEnable(GL_DEPTH_TEST); // enable depth comparisons
     glEnable(GL_CULL_FACE);
 
-    // m_cubeRenderer.render(camera);
 	m_chunkRenderer.render(camera); // render cube, as viewed by camera
+	glDisable(GL_CULL_FACE);
+	m_skyboxRenderer.render(camera);
+	glEnable(GL_CULL_FACE);
 	m_GUIRenderer.render(window);
 
 	window.display(); // display objects on window

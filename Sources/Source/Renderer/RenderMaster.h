@@ -5,6 +5,7 @@
 #include "CubeRenderer.h"
 #include "ChunkRenderer.h"
 #include "GUIRenderer.h"
+#include "SkyboxRenderer.h"
 #include "../Config.h"
 
 #include <SFML/Graphics.hpp>
@@ -22,6 +23,8 @@ class RenderMaster {
 
 		void drawGUI(const sf::Drawable& drawable);
 
+		void drawSkybox();
+
 		void finishRender(sf::RenderWindow& window, const Camera& camera);
 
 	private:
@@ -30,6 +33,7 @@ class RenderMaster {
 		ChunkRenderer m_chunkRenderer;
 
 		GUIRenderer m_GUIRenderer;
+		SkyboxRenderer m_skyboxRenderer;
 };
 
 #endif // RENDERMASTER_H_INCLUDED

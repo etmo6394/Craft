@@ -7,7 +7,7 @@ Context::Context(const Config& config) {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 0;
 	settings.majorVersion = 4;
-	settings.minorVersion = 6;
+	settings.minorVersion = 4;
 	settings.depthBits = 24;
 	settings.stencilBits = 8;
 
